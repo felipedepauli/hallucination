@@ -4,6 +4,7 @@ import Text from "./Text";
 import Figure from "./Figure";
 import Notes from "./Notes";
 import Formulas from "./Formulas";
+import NestedList from "./List";
 
 const RenderContent = ({ content }) => {
   return (
@@ -19,7 +20,10 @@ const RenderContent = ({ content }) => {
           case "Notes":
             return <Notes key={index} type={item.noteType}>{item.text}</Notes>;
           case "Formulas":
-            return <Formulas key={index} formula={item.formula} />;
+            return <Formulas key={index} formula={item.formula} subtitle={item.subtitle} />;
+            case "NestedList":
+              return <NestedList key={index} items={item.items} />;
+            
           default:
             return null;
         }

@@ -7,20 +7,26 @@ import RenderContent from "../components/RenderContent";
 const ArticlePage = () => {
   const { articleId } = useParams();
 
-  // Procurando o artigo dentro do bookData
   let selectedArticle = null;
-  for (const part of bookData.parts) {
-    for (const chapter of part.chapters) {
-      selectedArticle = chapter.articles.find((article) => article.id === articleId) || selectedArticle;
+
+  for (const subject of bookData) { // ✅ Agora iteramos corretamente sobre todos os subjects
+    for (const part of subject.parts) {
+      for (const chapter of part.chapters) {
+        selectedArticle = chapter.articles.find((article) => article.id === articleId) || selectedArticle;
+      }
     }
   }
 
   if (!selectedArticle) {
-    return <Typography variant="h6" sx={{ p: 4 }}>Article not found.</Typography>;
+    return <Typography variant="h6" sx={{ p: 4, color: "red" }}>⚠️ Article not found.</Typography>;
   }
 
   return (
-    <Container maxWidth="md" sx={{ my: 4 }}>
+    <Container maxWidth="false" sx={{ 
+      width: "80ch",
+      mt: 4,
+      ml: 4,
+      mr: 12 }}>
       <RenderContent content={selectedArticle.content} />
     </Container>
   );
